@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, NavbarBrand } from 'reactstrap';
 import { DISHES } from '../shared/dishes';
 import Menu from './MenuComponent.js'
 import DishDetail from './DishDetail.js'
+import Header from './HeaderComponent.js'
+import Footer from './FooterComponent.js';
 
 class Main extends Component{
 
@@ -32,16 +33,12 @@ class Main extends Component{
   render(){
     return(
       <div className="App">
-        <Navbar dark color="primary">
-          <div className="container">
-            <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
-          </div>
-        </Navbar>
-
+        <Header />
         <Menu dishes={this.state.dishes} onClick={(dishId) => this.onDishSelect(dishId)} />
         <div className="container">
         {this.renderDish()}
         </div>
+        <Footer />
       </div>
     );
   }
