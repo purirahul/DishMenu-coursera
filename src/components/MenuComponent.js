@@ -15,7 +15,6 @@ function RenderMenuItem ({dish}) {
                 </CardImgOverlay>
               </Link>
             </Card>
-
         );
     }
 
@@ -42,7 +41,7 @@ function RenderMenuItem ({dish}) {
                 <h3> Menu </h3>
                 <hr/>
               </div>
-              
+
             <div className="row">
                     {menu}
             </div>
