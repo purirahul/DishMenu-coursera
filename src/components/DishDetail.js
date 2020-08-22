@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody,
-    CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import CommentForm from './CommentForm.js'
+
 
 
 
@@ -10,14 +11,23 @@ import { Link } from 'react-router-dom';
     if(comments != null){
       const list = comments.map((comment) =>{
         return(
-        <ul className="list-unstyled" key={comment.id} style={{textAlign: "left"}}>
-            <li>{comment.comment}</li>
-            <li>-- {comment.author}, {comment.date}</li>
-        </ul>
+          <li key={comment.id}>
+            <p>{comment.comment}</p>
+            <p>-- {comment.author}, {comment.date}</p>
+          </li>
       )
       }
     )
-    return list;
+    return(
+          <div>
+            <h4>Comments: </h4>
+            <ul className="list-unstyled">
+              {list}
+            </ul>
+            <CommentForm />
+          </div>
+
+  )
     }
 
     else{
@@ -52,7 +62,6 @@ import { Link } from 'react-router-dom';
         </Card>
       </div>
       <div className="col-12 col-md-5 m-1">
-      <h4>Comments: </h4>
         <RenderComments comments={props.comments} />
       </div>
       </div>
