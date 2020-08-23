@@ -7,7 +7,7 @@ const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
 
-  function RenderComments({comments}){
+  function RenderComments({comments, addComment, dishId}){
     console.log(comments)
     if(comments != null){
       const list = comments.map((comment) =>{
@@ -25,7 +25,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
             <ul className="list-unstyled">
               {list}
             </ul>
-            <CommentForm />
+            <CommentForm dishId={dishId} addComment={addComment}/>
           </div>
 
   )
@@ -64,7 +64,10 @@ const minLength = (len) => (val) => val && (val.length >= len);
         </Card>
       </div>
       <div className="col-12 col-md-5 m-1">
-        <RenderComments comments={props.comments} />
+        <RenderComments comments={props.comments}
+            addComment={props.addComment}
+            dishId={props.dish.id}
+         />
       </div>
       </div>
       </div>
@@ -72,7 +75,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
   }
 
 
-  
+
 
 class CommentForm extends Component{
 
@@ -90,6 +93,11 @@ class CommentForm extends Component{
       });
     }
 
+    handleSubmit(values){
+      this.toggleModal();
+      this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+    }
+
     render(){
       return(
         <div>
@@ -99,7 +107,7 @@ class CommentForm extends Component{
             <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
             <ModalBody>
             <div className="container">
-                <LocalForm onsubmit={(values) => this.handleSubmit(values)}>
+                <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                   <Row className="form-group">
                   <Label htmlFor="rating">Rating</Label>
                     <Control.select className="form-control" model=".rating" name="rating" id="rating">
@@ -113,10 +121,10 @@ class CommentForm extends Component{
 
                   <Row className="form-group">
                     <Label htmFor="name">Your Name</Label>
-                    <Control.text className="form-control" model=".name" name="name" id="name" placeholder="Your Name"
+                    <Control.text className="form-control" model=".author" name="name" id="name" placeholder="Your Name"
                       validators= {{minLength: minLength(3), maxLength: maxLength(15)}}
                     />
-                    <Errors className="text-danger" model=".name" show="touched"
+                    <Errors className="text-danger" model=".author" show="touched"
                         messages={{
                           minLength: 'Must be greater than 2 characters',
                           maxLength: 'Must be 15 characters or less'
