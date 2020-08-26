@@ -3,6 +3,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import Loading from './LoadingComponent.js';
+import { baseUrl } from '../shared/baseUrl.js';
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -77,7 +78,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
       <div className="row">
       <div  className="col-12 col-md-5 m-1">
         <Card>
-            <CardImg top src={props.dish.image} alt={props.dish.name} />
+            <CardImg top src={baseUrl + props.dish.image} alt={props.dish.name} />
             <CardBody>
               <CardTitle>{props.dish.name}</CardTitle>
               <CardText>{props.dish.description}</CardText>
