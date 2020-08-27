@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import Loading from './LoadingComponent.js';
 import { baseUrl } from '../shared/baseUrl.js';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -14,10 +15,12 @@ const minLength = (len) => (val) => val && (val.length >= len);
     if(comments != null){
       const list = comments.map((comment) =>{
         return(
+          <Fade in>
           <li key={comment.id}>
             <p>{comment.comment}</p>
             <p>-- {comment.author}, {comment.date}</p>
           </li>
+          </Fade>
       )
       }
     )
@@ -25,7 +28,9 @@ const minLength = (len) => (val) => val && (val.length >= len);
           <div>
             <h4>Comments: </h4>
             <ul className="list-unstyled">
+            <Stagger in>
               {list}
+            </Stagger>
             </ul>
             <CommentForm dishId={dishId} postComment={postComment}/>
           </div>
@@ -77,6 +82,11 @@ const minLength = (len) => (val) => val && (val.length >= len);
 
       <div className="row">
       <div  className="col-12 col-md-5 m-1">
+      <FadeTransform
+              in
+              transformProps={{
+                  exitTransform: 'scale(0.5) translateY(-50%)'
+              }}>
         <Card>
             <CardImg top src={baseUrl + props.dish.image} alt={props.dish.name} />
             <CardBody>
@@ -84,6 +94,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
               <CardText>{props.dish.description}</CardText>
             </CardBody>
         </Card>
+        </FadeTransform>
       </div>
       <div className="col-12 col-md-5 m-1">
         <RenderComments comments={props.comments}
